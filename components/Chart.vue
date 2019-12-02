@@ -46,22 +46,23 @@ export default {
     valueAxis.renderer.fontSize = "0.8em"
 
     let series = chart.series.push(new am4charts.CandlestickSeries());
-    series.dataFields.dateX = "minute";
+    series.dataFields.dateX = "label";
     series.dataFields.valueY = "close";
     series.dataFields.openValueY = "open";
     series.dataFields.lowValueY = "low";
     series.dataFields.highValueY = "high";
-    series.simplifiedProcessing = true;
+    // series.simplifiedProcessing = true;
     series.tooltipText = "Open:${openValueY.value}\nLow:${lowValueY.value}\nHigh:${highValueY.value}\nClose:${valueY.value}";
 
     chart.cursor = new am4charts.XYCursor();
 
     // a separate series for scrollbar
     let lineSeries = chart.series.push(new am4charts.LineSeries());
-    lineSeries.dataFields.dateX = "minute";
+    lineSeries.dataFields.dateX = "label";
     lineSeries.dataFields.valueY = "close";
     // need to set on default state, as initially series is "show"
     lineSeries.defaultState.properties.visible = false;
+    // lineSeries.tooltipText = "{valueY.value}";
 
     // Create volume
     let valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
@@ -75,7 +76,7 @@ export default {
 
     var volumeSeries = chart.series.push(new am4charts.ColumnSeries());
     volumeSeries.dataFields.valueY = "volume";
-    volumeSeries.dataFields.dateX = "minute";
+    volumeSeries.dataFields.dateX = "label";
     volumeSeries.yAxis = valueAxis2;
 
     // hide from legend too (in case there is one)
@@ -90,6 +91,7 @@ export default {
     chart.data = this.$store.state.candles;
 
     this.chart = chart;
+
   },
   beforeDestroy() {
     if (this.chart) {
